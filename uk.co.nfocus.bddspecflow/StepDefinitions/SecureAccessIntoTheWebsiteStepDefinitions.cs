@@ -3,6 +3,7 @@ using TechTalk.SpecFlow;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support;
 using OpenQA.Selenium.Chrome;
+using uk.co.nfocus.bddspecflow.POM_pages;
 
 namespace uk.co.nfocus.bddspecflow.StepDefinitions
 {
@@ -10,7 +11,6 @@ namespace uk.co.nfocus.bddspecflow.StepDefinitions
     public class SecureAccessIntoTheWebsiteStepDefinitions
     {
         IWebDriver driver = new ChromeDriver();
-
         [Given(@"I am on the login page")]
         public void GivenIAmOnTheLoginPage()
         {
@@ -22,14 +22,17 @@ namespace uk.co.nfocus.bddspecflow.StepDefinitions
         [When(@"I use a valid username and password")]
         public void WhenIUseAValidUsernameAndPassword()
         {
-            driver.FindElement(By.Id("username")).SendKeys("");
-            driver.FindElement(By.Id("password")).SendKeys("");
+            Login_POM login = new Login_POM(driver);
+            login.Username("imanneupane@yahoo.com");
+            login.Password("Neupane@12345");
         }
 
         [Then(@"I am logged in")]
         public void ThenIAmLoggedIn()
         {
-            throw new PendingStepException();
+            Login_POM login = new Login_POM(driver);
+            login.LoginSubmit();
+            driver.Quit();
         }
     }
 }
