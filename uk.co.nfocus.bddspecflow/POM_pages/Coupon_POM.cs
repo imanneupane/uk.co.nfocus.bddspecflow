@@ -22,6 +22,7 @@ namespace uk.co.nfocus.bddspecflow.POM_pages
             this.driver = driver;
         }
 
+        IWebElement Cart => driver.FindElement(By.LinkText("Cart"));
         IWebElement Coupon => driver.FindElement(By.Id("coupon_code"));
         IWebElement ApplyButton => driver.FindElement(By.Name("apply_coupon"));
         IWebElement SubtotalAmt => driver.FindElement(By.XPath("/html//article[@id='post-5']/div[@class='entry-content']/div[@class='woocommerce']//table[@class='shop_table shop_table_responsive']//tr[@class='cart-subtotal']/td/span"));
@@ -29,6 +30,10 @@ namespace uk.co.nfocus.bddspecflow.POM_pages
         IWebElement ShippingFee => driver.FindElement(By.XPath("/html//article[@id='post-5']//div[@class='cart-collaterals']/div/table[@class='shop_table shop_table_responsive']//tr[@class='shipping']/td/span"));
         IWebElement Total => driver.FindElement(By.XPath("/html//article[@id='post-5']//div[@class='cart-collaterals']/div/table[@class='shop_table shop_table_responsive']//strong/span"));
 
+        public void ViewCart()
+        {
+            Cart.Click();
+        }
         public void CouponCode(String couponC)
         {
             Coupon.SendKeys(couponC);
@@ -37,12 +42,12 @@ namespace uk.co.nfocus.bddspecflow.POM_pages
         {
             ApplyButton.Click();
         }
-        public void CheckCoupon()
+        public void CheckCoupon(decimal discount)
         {
             string subtotal = SubtotalAmt.Text;
             string couponDiscount = CartDiscount.Text;
             priceBeforeDiscount = Convert.ToDecimal(subtotal.Remove(0, 1));
-            discount = (15m / 100m) * priceBeforeDiscount;
+            discount = (discount / 100m) * priceBeforeDiscount;
             Assert.That(couponDiscount.Remove(0, 1), Is.EqualTo(discount.ToString("0.00")), "They are not equal");
         }
 
