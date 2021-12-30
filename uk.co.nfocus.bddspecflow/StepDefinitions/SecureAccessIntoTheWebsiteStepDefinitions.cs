@@ -8,15 +8,16 @@ using uk.co.nfocus.bddspecflow.POM_pages;
 namespace uk.co.nfocus.bddspecflow.StepDefinitions
 {
     [Binding]
-    public class SecureAccessIntoTheWebsiteStepDefinitions
+    public class SecureAccessIntoTheWebsiteStepDefinitions: Support.Baseclass
     {
         IWebDriver driver = new ChromeDriver();
         [Given(@"I am on the login page")]
         public void GivenIAmOnTheLoginPage()
         {
-            driver.Url = "https://www.edgewordstraining.co.uk/demo-site/";
-            driver.FindElement(By.LinkText("Dismiss")).Click();
-            driver.FindElement(By.LinkText("My account")).Click();
+            driver.Url = baseUrl;
+            driver.Manage().Window.Maximize();
+            Pages_POM accountPage = new Pages_POM(driver);
+            accountPage.gotoAccountPage();
         }
 
         [When(@"I use a valid username and password")]

@@ -36,5 +36,12 @@ namespace uk.co.nfocus.bddspecflow.POM_pages
         {
             LoginButton.Click();
         }
+        public void LoginExpected(string sUsername, string sPassword)
+        {
+            Username(sUsername);
+            Password(sPassword);
+            LoginSubmit();
+            //Assert.That();
+        }
     }
 }
