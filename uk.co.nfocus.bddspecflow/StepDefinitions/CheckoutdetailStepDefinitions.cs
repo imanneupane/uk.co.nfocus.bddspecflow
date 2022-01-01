@@ -2,7 +2,6 @@ using System;
 using TechTalk.SpecFlow;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-using NUnit.Framework;
 using uk.co.nfocus.bddspecflow.POM_pages;
 using static uk.co.nfocus.bddspecflow.Support.Helpers;
 

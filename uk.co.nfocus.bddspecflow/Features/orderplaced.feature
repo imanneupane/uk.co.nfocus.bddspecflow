@@ -1,6 +1,6 @@
 ﻿Feature: orderplaced
 
-A short summary of the feature
+Checking the order is being placed
 
 @displayorder
 Scenario: check thr order number is displayed
