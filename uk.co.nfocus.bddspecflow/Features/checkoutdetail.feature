@@ -1,9 +1,10 @@
 ﻿Feature: checkoutdetail
 
-A short summary of the feature
+Entering the shipping details after proceeding to the checkout after adding item to the cart and appling discount
 
 @checkoutdetails
 Scenario: Entering the billing details
-	Given I am on the billing information page
-	When I enter the coupon code
-	Then Discount is applied to the total
+	Given I have proceeded to checkout
+	And I am on the billing information page
+	When I enter my shipping details 
+	Then I can place my order
