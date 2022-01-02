@@ -35,14 +35,16 @@ namespace uk.co.nfocus.bddspecflow.StepDefinitions
         {
             CheckoutDetails_POM billingDetail = new CheckoutDetails_POM(driver);
             billingDetail.BillingForm("Nami", "Rai", "nFocus", "United Kingdom", "101 Star Road", "Ashford", "Kent", "TN3 5JB", "021540231", "namirai@yahoo.com");
-            Thread.Sleep(1000);
+            
         }
 
         [Then(@"I can place my order")]
         public void ThenICanPlaceMyOrder()
         {
+            Thread.Sleep(1000);
             CheckoutDetails_POM placeOrder = new CheckoutDetails_POM(driver);
             placeOrder.PlaceOrder();
+            driver.Quit();
             /*
             try
             {

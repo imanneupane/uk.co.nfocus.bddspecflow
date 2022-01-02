@@ -44,6 +44,7 @@ namespace uk.co.nfocus.bddspecflow.StepDefinitions
                 TakeScreenShotElement(driver, "MyOrders", By.Id("post-7"));
                 Console.WriteLine("Recent Order was not Placed");
             }
+            driver.Quit();
         }
     }
 }
