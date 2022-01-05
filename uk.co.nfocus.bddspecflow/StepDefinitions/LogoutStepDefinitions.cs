@@ -6,13 +6,14 @@ using OpenQA.Selenium.Chrome;
 using uk.co.nfocus.bddspecflow.POM_pages;
 using static uk.co.nfocus.bddspecflow.Support.Helpers;
 using NUnit.Framework;
+using static uk.co.nfocus.bddspecflow.Support.Baseclass;
 
 namespace uk.co.nfocus.bddspecflow.StepDefinitions
 {
     [Binding]
-    public class LogoutStepDefinitions: Support.Baseclass
+    public class LogoutStepDefinitions
     {
-        IWebDriver driver = new ChromeDriver();
+        readonly string baseUrl = "https://www.edgewordstraining.co.uk/demo-site/";
         [Given(@"I am logged in to an account")]
         public void GivenIAmLoggedInToAnAccount()
         {

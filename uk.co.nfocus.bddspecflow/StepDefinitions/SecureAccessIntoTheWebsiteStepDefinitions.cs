@@ -4,13 +4,14 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Support;
 using OpenQA.Selenium.Chrome;
 using uk.co.nfocus.bddspecflow.POM_pages;
+using static uk.co.nfocus.bddspecflow.Support.Baseclass;
 
 namespace uk.co.nfocus.bddspecflow.StepDefinitions
 {
     [Binding]
-    public class SecureAccessIntoTheWebsiteStepDefinitions: Support.Baseclass
+    public class SecureAccessIntoTheWebsiteStepDefinitions
     {
-        IWebDriver driver = new ChromeDriver();
+        readonly string baseUrl = "https://www.edgewordstraining.co.uk/demo-site/";
         [Given(@"I am on the login page")]
         public void GivenIAmOnTheLoginPage()
         {
@@ -20,12 +21,12 @@ namespace uk.co.nfocus.bddspecflow.StepDefinitions
             accountPage.gotoAccountPage();
         }
 
-        [When(@"I use a valid username and password")]
-        public void WhenIUseAValidUsernameAndPassword()
+        [When(@"I use a valid (.*) and (.*)")]
+        public void WhenIUseAValidImanneupaneYahoo_ComAndNeupane(string Username, string Password)
         {
             Login_POM login = new Login_POM(driver);
-            login.Username("imanneupane@yahoo.com");
-            login.Password("Neupane@12345");
+            login.Username(Username);
+            login.Password(Password);
         }
 
         [Then(@"I am logged in")]

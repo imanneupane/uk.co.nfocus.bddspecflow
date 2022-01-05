@@ -5,13 +5,15 @@ using OpenQA.Selenium.Chrome;
 using NUnit.Framework;
 using uk.co.nfocus.bddspecflow.POM_pages;
 using static uk.co.nfocus.bddspecflow.Support.Helpers;
+using static uk.co.nfocus.bddspecflow.Support.Baseclass;
+
 
 namespace uk.co.nfocus.bddspecflow.StepDefinitions
 {
     [Binding]
-    public class ApplycouponStepDefinitions : Support.Baseclass
+    public class ApplycouponStepDefinitions
     {
-        IWebDriver driver = new ChromeDriver();
+        readonly string baseUrl = "https://www.edgewordstraining.co.uk/demo-site/";
         [Given(@"I have added an item to cart")]
         public void GivenIHaveAddedAnItemToCart()
         {
@@ -61,8 +63,8 @@ namespace uk.co.nfocus.bddspecflow.StepDefinitions
             WaitHelper(driver, 20, By.CssSelector(".cart-discount.coupon-edgewords > td > .amount.woocommerce-Price-amount"));
         }
 
-        [When(@"Coupon takes off (.*)%")]
-        public void WhenCouponTakesOffOff(decimal discount)
+        [When(@"Coupon takes off (.*)")]
+        public void WhenCouponTakesOff(decimal discount)
         {
             try
             {
@@ -75,17 +77,16 @@ namespace uk.co.nfocus.bddspecflow.StepDefinitions
                 TakeScreenShotElement(driver, "CouponDiscount", By.ClassName("cart_totals"));
                 Console.WriteLine("Coupon does not take 15% off");
             }
-
         }
 
-        [Then(@"Discount is deducted from total")]
-        public void ThenDiscountIsDeductedFromTotal()
+        [Then(@"(.*) Discount is deducted from total")]
+        public void ThenDiscountIsDeductedFromTotal(decimal discount)
         {
             //Check that the total calculated is correct
             try
             {
                 Coupon_POM applycoupon = new Coupon_POM(driver);
-                applycoupon.CheckTotal();
+                applycoupon.CheckTotal(discount);
                 //Assert.That(totalAmt.ToString("0.00"),Is.EqualTo(total.Remove(0, 1)), "They are not equal");
             }
             catch (AssertionException)

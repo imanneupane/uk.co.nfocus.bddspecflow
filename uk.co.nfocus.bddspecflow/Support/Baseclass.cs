@@ -9,17 +9,24 @@ using System.Threading.Tasks;
 
 namespace uk.co.nfocus.bddspecflow.Support
 {
+    [Binding]
     public class Baseclass
     {
-        //public IWebDriver driver;
-        public string baseUrl = "https://www.edgewordstraining.co.uk/demo-site/";
+        public static IWebDriver driver;
+        //public string baseUrl = "https://www.edgewordstraining.co.uk/demo-site/";
 
-        [SetUp]
-        public void Setup()
+        [BeforeScenario]
+        public void SetUp()
         {
-            //driver = new ChromeDriver();
+            driver = new ChromeDriver();
             //driver = new EdgeDriver();
-            //driver.Manage().Window.Maximize();
+            driver.Manage().Window.Maximize();
+        }
+
+        [AfterScenario]
+        public void TearDown()
+        {
+            driver.Quit();
         }
     }
 }

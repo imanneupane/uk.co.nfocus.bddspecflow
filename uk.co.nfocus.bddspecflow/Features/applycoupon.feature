@@ -12,5 +12,9 @@ Scenario: Apply coupon at checkout
 @checkdiscount
 Scenario: Discount applied
 	Given I applied the coupon code 
-	When Coupon takes off 15%
-	Then Discount is deducted from total
+	When Coupon takes off <discount>
+	Then <discount> Discount is deducted from total
+
+Examples: 
+| discount |
+| 15       |

@@ -4,13 +4,15 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using uk.co.nfocus.bddspecflow.POM_pages;
 using static uk.co.nfocus.bddspecflow.Support.Helpers;
+using static uk.co.nfocus.bddspecflow.Support.Baseclass;
+
 
 namespace uk.co.nfocus.bddspecflow.StepDefinitions
 {
     [Binding]
-    public class CheckoutdetailStepDefinitions: Support.Baseclass
+    public class CheckoutdetailStepDefinitions
     {
-        IWebDriver driver = new ChromeDriver();
+        readonly string baseUrl = "https://www.edgewordstraining.co.uk/demo-site/";
         [Given(@"I have proceeded to checkout")]
         public void GivenIHaveProceededToCheckout()
         {

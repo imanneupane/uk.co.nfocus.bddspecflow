@@ -5,14 +5,14 @@ using OpenQA.Selenium.Support;
 using OpenQA.Selenium.Chrome;
 using NUnit.Framework;
 using uk.co.nfocus.bddspecflow.POM_pages;
+using static uk.co.nfocus.bddspecflow.Support.Baseclass;
 
 namespace uk.co.nfocus.bddspecflow.StepDefinitions
 {
     [Binding]
-    public class AddItemStepDefinitions: Support.Baseclass
+    public class AddItemStepDefinitions
     {
-        IWebDriver driver = new ChromeDriver();
-
+        readonly string baseUrl = "https://www.edgewordstraining.co.uk/demo-site/";
         [Given(@"I am logged in")]
         public void GivenIAmLoggedIn()
         {
