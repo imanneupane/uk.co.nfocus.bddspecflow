@@ -16,7 +16,6 @@ namespace uk.co.nfocus.bddspecflow.StepDefinitions
         public void GivenIAmOnTheLoginPage()
         {
             driver.Url = baseUrl;
-            driver.Manage().Window.Maximize();
             Pages_POM accountPage = new Pages_POM(driver);
             accountPage.gotoAccountPage();
         }
