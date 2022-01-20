@@ -28,7 +28,8 @@ namespace uk.co.nfocus.bddspecflow.StepDefinitions
             driver.Url = baseUrl;
             pageNav.clear(); //getting rid of the dismiss bar
             pageNav.gotoAccountPage();
-            login.LoginExpected(username, password);
+            //logining into the user account from passed parameters
+            login.LoginExpected(username, password); 
             WaitHelper(driver, 10, By.LinkText("Dashboard"));
             Console.WriteLine("The User is logged in!");
         }
@@ -45,9 +46,9 @@ namespace uk.co.nfocus.bddspecflow.StepDefinitions
         public void WhenIApplyTheEdgewordsDiscountCode(string code)
         {
             Console.WriteLine(code);
+            //gets the coupon code from the feature file as passed parameter
             couponCode.CouponCode(code);
             couponCode.ApplyCouponButton();
-            Thread.Sleep(3000);
         }
 
         [Then(@"Coupon takes (.*) off")]
@@ -56,10 +57,13 @@ namespace uk.co.nfocus.bddspecflow.StepDefinitions
             //Checking if the discount from the coupon matches the context 
             try
             {
+                //Asserts that the discount applied matches
                 Assert.That(couponCode.CouponDiscount().Remove(0, 1), Is.EqualTo(couponCode.CheckCoupon(discount).ToString("0.00")), "They are not equal");
             }
+            //if it doesn't match assert fails and the exception is catched
             catch (AssertionException)
             {
+                //It takes the screenshot of the discounts applied 
                 TakeScreenShotElement(driver, "CouponDiscount", By.ClassName("cart_totals"));
                 Console.WriteLine("Coupon does not take 15% off");
             }
@@ -67,11 +71,13 @@ namespace uk.co.nfocus.bddspecflow.StepDefinitions
             //Check that the total calculated is correct
             try
             {
+                //Assets that the total is correct after shipping fee
                 Assert.That(couponCode.TotalAmount().Remove(0, 1), Is.EqualTo(couponCode.CheckTotal(discount).ToString("0.00")), "They are not equal");
             }
+            //it catches the exception if assert fails
             catch (AssertionException)
             {
-                //Thread.Sleep(1000);
+                //Take a screenshot of the total amount 
                 TakeScreenShotElement(driver, "Cart Total", By.ClassName("order-total"));
                 Console.WriteLine("The total amount is incorrect");
             }
@@ -81,7 +87,14 @@ namespace uk.co.nfocus.bddspecflow.StepDefinitions
         [When(@"I have purchased an item")]
         public void WhenIHavePurchasedAnItem()
         {
+            //Proceeds on to the checkout page
             checkout.CheckoutPage();
+            /*
+             * Entering details manually
+             * Since this is one end-to-end test
+             * Database class could be used for further improvements
+             * for multiple details
+             * */
             checkout.BillingForm("Nami", "Rai", "nFocus", "United Kingdom", "101 Star Road", "Ashford", "Kent", "TN3 5JB", "021540231", "namirai@yahoo.com");
             Thread.Sleep(1000);
             checkout.PlaceOrder();
@@ -91,6 +104,7 @@ namespace uk.co.nfocus.bddspecflow.StepDefinitions
         [Then(@"Order number displayed is same to my orders")]
         public void ThenOrderNumberDisplayedIsSameToMyOrders()
         {
+            //Goto my order page 
             pageNav.gotoAccountPage();
             myOrder.GoToMyOrders();
             Console.WriteLine("Your order number is " + myOrder.CheckOrderNumber());
@@ -98,14 +112,17 @@ namespace uk.co.nfocus.bddspecflow.StepDefinitions
             //Checking if the order number displayed in my order is same as order number displayed when purchase
             try
             {
+                //assert that the order number is there in my order
                 Assert.That(string.IsNullOrEmpty(myOrder.CheckOrderNumber()), Is.False, "Order number is Displayed!");
             }
             catch (AssertionException)
             {
+                //Take a screenshot of the order number
                 TakeScreenShotElement(driver, "MyOrders", By.Id("post-7"));
                 Console.WriteLine("Recent Order was not Placed");
             }
             
+            //Logout of the account once the orders are checked
             logoff.MyAccount();
             logoff.Logout();
             Console.WriteLine("You are logged out!");
