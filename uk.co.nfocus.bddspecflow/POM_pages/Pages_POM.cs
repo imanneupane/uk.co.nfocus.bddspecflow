@@ -19,9 +19,12 @@ namespace uk.co.nfocus.bddspecflow.POM_pages
         IWebElement account => driver.FindElement(By.LinkText("My account"));
         IWebElement shop => driver.FindElement(By.LinkText("Shop"));
 
-        public void gotoAccountPage()
+        public void clear()
         {
             dismiss.Click();
+        }
+        public void gotoAccountPage()
+        {
             account.Click();
         }
         public void gotoShop()

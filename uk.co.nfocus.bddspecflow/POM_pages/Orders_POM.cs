@@ -22,10 +22,10 @@ namespace uk.co.nfocus.bddspecflow.POM_pages
         {
             orders.Click();
         }
-        public void CheckOrderNumber()
+        public String CheckOrderNumber()
         {
             string orderNumber = recentOrder.Text;
-            Assert.That(string.IsNullOrEmpty(orderNumber), Is.False, "Order number is Displayed!");
+            return orderNumber;
         }
     }
 }

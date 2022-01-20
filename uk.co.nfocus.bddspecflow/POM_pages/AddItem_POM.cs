@@ -32,5 +32,11 @@ namespace uk.co.nfocus.bddspecflow.POM_pages
         {
             viewCart.Click();
         }
+        public void AddItemtoCart()
+        {
+            Product.Click();
+            AddToCart.Click();
+            viewCart.Click();
+        }
     }
 }

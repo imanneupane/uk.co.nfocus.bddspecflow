@@ -42,26 +42,35 @@ namespace uk.co.nfocus.bddspecflow.POM_pages
         {
             ApplyButton.Click();
         }
-        public void CheckCoupon(decimal off)
+        public String CouponDiscount()
+        {
+            string couponDiscount = CartDiscount.Text;
+            return couponDiscount;
+            
+        }
+        public String TotalAmount()
+        {
+            string totalAmount = Total.Text;
+            return totalAmount;
+        }
+        public Decimal CheckCoupon(decimal off)
         {
             string subtotal = SubtotalAmt.Text;
-            string couponDiscount = CartDiscount.Text;
             priceBeforeDiscount = Convert.ToDecimal(subtotal.Remove(0, 1));
             discount = (off / 100m) * priceBeforeDiscount;
-            Assert.That(couponDiscount.Remove(0, 1), Is.EqualTo(discount.ToString("0.00")), "They are not equal");
+            return discount;
         }
 
-        public void CheckTotal(decimal off)
+        public decimal CheckTotal(decimal off)
         {
             string shipping = ShippingFee.Text;
             string subtotal = SubtotalAmt.Text;
-            string couponDiscount = CartDiscount.Text;
             priceBeforeDiscount = Convert.ToDecimal(subtotal.Remove(0, 1));
             discount = (off / 100m) * priceBeforeDiscount;
             priceAfterDiscount = priceBeforeDiscount - discount;
             shipCost = Convert.ToDecimal(shipping.Remove(0, 1));
             totalAmt = priceAfterDiscount + shipCost;
-            Assert.That(Total.Text.Remove(0, 1), Is.EqualTo(totalAmt.ToString("0.00")), "They are not equal");
+            return totalAmt;
         }
     }
 }
