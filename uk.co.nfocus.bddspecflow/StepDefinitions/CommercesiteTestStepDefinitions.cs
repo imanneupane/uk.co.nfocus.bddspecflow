@@ -13,7 +13,10 @@ namespace uk.co.nfocus.bddspecflow.StepDefinitions
     [Binding]
     public class CommercesiteTestStepDefinitions
     {
+        //Initilizing the the main webpage
         readonly string baseUrl = "https://www.edgewordstraining.co.uk/demo-site/";
+
+        //Initilizing all the POM pages 
         Pages_POM pageNav = new Pages_POM(driver);
         Login_POM login = new Login_POM(driver);
         AddItem_POM selectItem = new AddItem_POM(driver);
@@ -54,6 +57,7 @@ namespace uk.co.nfocus.bddspecflow.StepDefinitions
         [Then(@"Coupon takes (.*) off")]
         public void ThenCouponTakesOff(decimal discount)
         {
+            WaitHelper(driver, 10, By.CssSelector(".cart-discount.coupon-edgewords > td > .amount.woocommerce-Price-amount"));
             //Checking if the discount from the coupon matches the context 
             try
             {
@@ -89,16 +93,24 @@ namespace uk.co.nfocus.bddspecflow.StepDefinitions
         {
             //Proceeds on to the checkout page
             checkout.CheckoutPage();
+            WaitHelper(driver, 10, By.LinkText("Click here to enter your code"));
             /*
              * Entering details manually
              * Since this is one end-to-end test
              * Database class could be used for further improvements
              * for multiple details
              * */
-            checkout.BillingForm("Nami", "Rai", "nFocus", "United Kingdom", "101 Star Road", "Ashford", "Kent", "TN3 5JB", "021540231", "namirai@yahoo.com");
-            Thread.Sleep(1000);
-            checkout.PlaceOrder();
-            Thread.Sleep(3000);
+            try
+            {
+                checkout.BillingForm("Nami", "Rai", "nFocus", "United Kingdom", "101 Star Road", "Ashford", "Kent", "TN3 5JB", "021540231", "namirai@yahoo.com");
+                //Thread.Sleep(1000);
+                checkout.PlaceOrder();
+                //Thread.Sleep(1000);
+            }
+            catch(StaleElementReferenceException)
+            {
+                Console.WriteLine("Checkout Complete!");
+            }
         }
 
         [Then(@"Order number displayed is same to my orders")]
