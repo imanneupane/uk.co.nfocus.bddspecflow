@@ -55,14 +55,14 @@ namespace uk.co.nfocus.bddspecflow.StepDefinitions
         }
 
         [Then(@"Coupon takes (.*) off")]
-        public void ThenCouponTakesOff(decimal discount)
+        public void ThenCouponTakesOff(decimal intendedDiscount)
         {
             WaitHelper(driver, 10, By.CssSelector(".cart-discount.coupon-edgewords > td > .amount.woocommerce-Price-amount"));
             //Checking if the discount from the coupon matches the context 
             try
             {
                 //Asserts that the discount applied matches
-                Assert.That(couponCode.CouponDiscount().Remove(0, 1), Is.EqualTo(couponCode.CheckCoupon(discount).ToString("0.00")), "They are not equal");
+                Assert.That(couponCode.ActualDiscount(), Is.EqualTo(couponCode.CheckCoupon(intendedDiscount)), "They are not equal");
             }
             //if it doesn't match assert fails and the exception is catched
             catch (AssertionException)
@@ -76,7 +76,7 @@ namespace uk.co.nfocus.bddspecflow.StepDefinitions
             try
             {
                 //Assets that the total is correct after shipping fee
-                Assert.That(couponCode.TotalAmount().Remove(0, 1), Is.EqualTo(couponCode.CheckTotal(discount).ToString("0.00")), "They are not equal");
+                Assert.That(couponCode.TotalAmount(), Is.EqualTo(couponCode.CheckTotal(intendedDiscount)), "They are not equal");
             }
             //it catches the exception if assert fails
             catch (AssertionException)
@@ -103,9 +103,9 @@ namespace uk.co.nfocus.bddspecflow.StepDefinitions
             try
             {
                 checkout.BillingForm("Nami", "Rai", "nFocus", "United Kingdom", "101 Star Road", "Ashford", "Kent", "TN3 5JB", "021540231", "namirai@yahoo.com");
-                //Thread.Sleep(1000);
+                Thread.Sleep(1000);
                 checkout.PlaceOrder();
-                //Thread.Sleep(1000);
+                Thread.Sleep(1000);
             }
             catch(StaleElementReferenceException)
             {
@@ -116,6 +116,9 @@ namespace uk.co.nfocus.bddspecflow.StepDefinitions
         [Then(@"Order number displayed is same to my orders")]
         public void ThenOrderNumberDisplayedIsSameToMyOrders()
         {
+            //storing the order number when the order is placed
+            string orderNumberPlaced = myOrder.OrderPlaced();
+            Console.WriteLine("The order no. is " + myOrder.OrderPlaced());
             //Goto my order page 
             pageNav.gotoAccountPage();
             myOrder.GoToMyOrders();
@@ -125,7 +128,7 @@ namespace uk.co.nfocus.bddspecflow.StepDefinitions
             try
             {
                 //assert that the order number is there in my order
-                Assert.That(string.IsNullOrEmpty(myOrder.CheckOrderNumber()), Is.False, "Order number is Displayed!");
+                Assert.That(myOrder.CheckOrderNumber(), Is.EqualTo(orderNumberPlaced), "Order number is Displayed!");
             }
             catch (AssertionException)
             {

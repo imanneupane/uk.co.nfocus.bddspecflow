@@ -42,26 +42,26 @@ namespace uk.co.nfocus.bddspecflow.POM_pages
         {
             ApplyButton.Click();
         }
-        public String CouponDiscount()
+        public String ActualDiscount()
         {
             string couponDiscount = CartDiscount.Text;
-            return couponDiscount;
+            return couponDiscount.Remove(0, 1);
             
         }
         public String TotalAmount()
         {
             string totalAmount = Total.Text;
-            return totalAmount;
+            return totalAmount.Remove(0, 1);
         }
-        public Decimal CheckCoupon(decimal off)
+        public String CheckCoupon(decimal off)
         {
             string subtotal = SubtotalAmt.Text;
             priceBeforeDiscount = Convert.ToDecimal(subtotal.Remove(0, 1));
             discount = (off / 100m) * priceBeforeDiscount;
-            return discount;
+            return discount.ToString("0.00");
         }
 
-        public decimal CheckTotal(decimal off)
+        public String CheckTotal(decimal off)
         {
             string shipping = ShippingFee.Text;
             string subtotal = SubtotalAmt.Text;
@@ -70,7 +70,7 @@ namespace uk.co.nfocus.bddspecflow.POM_pages
             priceAfterDiscount = priceBeforeDiscount - discount;
             shipCost = Convert.ToDecimal(shipping.Remove(0, 1));
             totalAmt = priceAfterDiscount + shipCost;
-            return totalAmt;
+            return totalAmt.ToString("0.00");
         }
     }
 }

@@ -8,7 +8,7 @@ order number is present.
 Background: 
 Given I am logged in with 'imanneupane@yahoo.com' and 'Neupane@12345'
 
-Scenario: purcahse an item
+Scenario Outline: purcahse an item
 	When I add an item to the cart
 	And I apply the <coupon> discount code 
 	Then Coupon takes <discount> off
